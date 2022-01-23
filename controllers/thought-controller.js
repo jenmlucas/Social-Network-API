@@ -1,11 +1,11 @@
-const { Thought, Thought, User } = require("../models");
+const { Thought, User } = require("../models");
 
 const thoughtController = {
   //get all thoughts
   getAllThoughts(req, res) {
     Thought.find({})
       .populate({
-        path: "user",
+        path: 'user',
         select: "-__v",
       })
       .select("-__v")
