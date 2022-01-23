@@ -10,7 +10,7 @@ const userController = {
       })
       .select("-__v")
       .sort({ _id: -1 })
-      .then((dbPizzaData) => res.json(dbPizzaData))
+      .then((dbUserData) => res.json(dbUserData))
       .catch((err) => {
         console.log(err);
         res.status(400).json(err);
@@ -29,7 +29,7 @@ const userController = {
       })
       .select("-__v")
       .then((dbUserData) => {
-        //If no pizza is found, send 404
+        //If no User is found, send 404
         if (!dbUserData) {
           res.status(404).json({ message: "No user found with this id!" });
           return;
@@ -79,7 +79,7 @@ const userController = {
       .catch((err) => res.status(400).json(err));
   },
 
-  //delete pizza
+  //delete User
   deleteUser({ params }, res) {
     User.findOneAndDelete({ _id: params.id })
       .then((dbUserData) => {
@@ -95,10 +95,10 @@ const userController = {
   removeFriend({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.userId},
-      { $pull: { friends: params.friendsId}},
+      { $pull: { friends: { friendId: params.friendsId} } },
       { new: true}
       )
-      .then(dbPizzaData => res.json(dbPizzaData))
+      .then(dbUserData => res.json(dbUserData))
       .catch(err => res.json(err)); 
   }
 };
